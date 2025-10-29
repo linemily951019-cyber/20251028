@@ -74,9 +74,11 @@ function draw() {
       rainDrops = [];
     }
 
-    // 成績與回饋（全部 20px 並置中）
-    text(`測驗完成！ 得分： ${score} / ${QUIZ_SIZE}`, centerX, 60, contentW);
-    let msg = "";
+  // 成績與回饋（全部 20px 並置中）
+  // 計算最終得分：每題 20 分
+  const finalPoints = score * 20;
+  text(`測驗完成！ 答對： ${score} / ${QUIZ_SIZE}    最終得分： ${finalPoints} 分`, centerX, 60, contentW);
+  let msg = "";
     if (score === 5) msg = "你實在是太棒了 !";
     else if (score >= 3) msg = "不錯哦 ! 會越來越好 !";
     else msg = "再接再厲 !";
