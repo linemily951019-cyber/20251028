@@ -56,8 +56,8 @@ function draw() {
   const margin = 40;
   const contentW = min(1000, width - margin * 2);
 
-  // 按鈕中心 Y（往上移）
-  const BTN_CENTER_Y = height - 160;
+  // 按鈕中心 Y（往下移）
+  const BTN_CENTER_Y = height - 50;
 
   if (current >= QUIZ_SIZE) {
     if (!inResult) {
@@ -82,31 +82,28 @@ function draw() {
     else msg = "再接再厲 !";
     text(msg, centerX, 100, contentW);
 
-    // 答題清單（位於成績與回饋下方並置中）
-    const startY = 140;
-    const availableH = max(200, height - startY - 240);
-    const lineH = min(120, availableH / QUIZ_SIZE);
+        // 答題清單（位於成績與回饋下方並置中）
+    const resultStartY = 140;
+    const availableH = max(200, height - resultStartY - 120);
+    const lineH = min(160, availableH / QUIZ_SIZE);
 
     for (let i = 0; i < quiz.length; i++) {
       const q = quiz[i];
-      const yMid = startY + i * lineH + lineH / 2;
+      const yMid = resultStartY + i * lineH + lineH / 2;
 
       const correct = q.chosen && q.chosen === q.answer;
       if (correct) fill(0, 60, 20); // 墨綠
       else fill(120, 0, 0); // 暗紅
 
-      // 題號（上）與題目（下）
-      textSize(13);
-      text(`第 ${i + 1} 題`, centerX, yMid - 20);
-      text(`${q.question}`, centerX, yMid, contentW);
+      // 題號與題目（合併在同一行）
+      textSize(15);
+      text(`第 ${i + 1} 題：${q.question}`, centerX, yMid - 20, contentW);
 
       // 你的答案與正確答案（置中）
       fill(40);
       const your = q.chosen ? `${q.chosen}. ${q['option' + q.chosen] || ''}` : "未作答";
       const corr = q.answer ? `${q.answer}. ${q['option' + q.answer] || ''}` : "N/A";
       text(`你的答案：${your}    正確答案：${corr}`, centerX, yMid + 20, contentW);
-
-      textSize(20);
     }
 
     // 重新測驗按鈕（中心對齊）
@@ -175,9 +172,10 @@ function draw() {
     optionRects.push({ cx, cy, w, h });
   }
 
-  // 下一題按鈕（中心對齊並往上）
+  // 下一題或答題結束按鈕（中心對齊）
   if (answered) {
-    drawButton(centerX, BTN_CENTER_Y, 220, 56, "下一題");
+    const btnText = current === QUIZ_SIZE - 1 ? "答題結束" : "下一題";
+    drawButton(centerX, BTN_CENTER_Y, 220, 56, btnText);
   }
 
   // 更新並畫出殘留特效
@@ -189,7 +187,7 @@ function draw() {
 function mousePressed() {
   if (quiz.length === 0) return;
 
-  const BTN_CENTER_Y = height - 160;
+  const BTN_CENTER_Y = height - 50;
 
   if (current >= QUIZ_SIZE) {
     if (isInsideCenter(mouseX, mouseY, width / 2, BTN_CENTER_Y, 220, 56)) {
