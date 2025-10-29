@@ -96,16 +96,15 @@ function draw() {
       else fill(120, 0, 0); // 暗紅
 
       // 題號（上）與題目（下）
-      text(`第 ${i + 1} 題`, centerX, yMid - 28);
-      textSize(20);
-      text(`${q.question}`, centerX, yMid - 4, contentW);
+      textSize(13);
+      text(`第 ${i + 1} 題`, centerX, yMid - 20);
+      text(`${q.question}`, centerX, yMid, contentW);
 
       // 你的答案與正確答案（置中）
-      textSize(18);
       fill(40);
       const your = q.chosen ? `${q.chosen}. ${q['option' + q.chosen] || ''}` : "未作答";
       const corr = q.answer ? `${q.answer}. ${q['option' + q.answer] || ''}` : "N/A";
-      text(`你的答案：${your}    正確答案：${corr}`, centerX, yMid + 26, contentW);
+      text(`你的答案：${your}    正確答案：${corr}`, centerX, yMid + 20, contentW);
 
       textSize(20);
     }
