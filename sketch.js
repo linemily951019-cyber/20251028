@@ -30,7 +30,7 @@ function setup() {
 }
 
 function windowResized() {
-  resizeCanvas(900, 900);
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
